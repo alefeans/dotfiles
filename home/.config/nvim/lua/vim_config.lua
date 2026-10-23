@@ -11,3 +11,8 @@ o.scrolloff = 16               -- keep cursor away from the screen edge
 o.undofile = true              -- persistent undo across sessions
 o.mouse = ''                   -- no mouse in nvim; also lets Herdr keep host mouse capture off so Escape isn't swallowed
 
+-- reload buffers the AI changed on disk (autoread alone only checks on a few events)
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+  callback = function() if vim.fn.getcmdwintype() == '' then vim.cmd('checktime') end end,
+})
+

@@ -18,6 +18,10 @@ return {
       { '<leader>s', function() Snacks.picker.grep() end,  desc = 'Search Text' },
       { '<leader>b', function() Snacks.picker.buffers() end, desc = 'Buffers' },
       { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
+      { '<leader>r', function() Snacks.picker.lsp_references() end, desc = 'References' },
+      { '<leader>i', function() Snacks.picker.lsp_implementations() end, desc = 'Implementations' },
+      { '<leader>o', function() Snacks.picker.lsp_symbols() end, desc = 'Outline (symbols)' },
+      { '<leader>d', function() Snacks.picker.diagnostics() end, desc = 'Diagnostics' },
     },
   },
 }

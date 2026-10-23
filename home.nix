@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, user, inputs, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
@@ -16,12 +16,19 @@ in
     jq        # json on the command line
     lazygit
     neovim
+    # language servers and linters for nvim (wired up in nvim/lua/plugins/lsp.lua)
+    gopls
+    basedpyright ruff mypy
+    tree-sitter  # nvim-treesitter compiles its parsers with this
+    # git push gate (no `init`, so no /no-mistakes skill for agents); run `no-mistakes daemon restart` after upgrades
+    inputs.no-mistakes.packages.${pkgs.stdenv.hostPlatform.system}.default
     # the font everything renders in
     nerd-fonts.hack
   ];
   fonts.fontconfig.enable = true;
   home.sessionVariables.EDITOR = "nvim";
-
+  # The no-mistakes daemon imports the login-shell env at startup, so this covers it too.
+  home.sessionVariables.NO_MISTAKES_TELEMETRY = "0";
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;      # ghost text from history
