@@ -21,4 +21,12 @@
   },
   "alwaysThinkingEnabled": false,
   "tui": "fullscreen",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "rtk hook claude" }]
+      }
+    ]
+  }
 }
