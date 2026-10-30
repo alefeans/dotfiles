@@ -18,6 +18,18 @@ config.keys = {
 	{ key = "LeftArrow", mods = "OPT", action = wezterm.action.SendString("\x1b[1;5D") }, -- Ctrl+Left: back one word
 	{ key = "RightArrow", mods = "OPT", action = wezterm.action.SendString("\x1b[1;5C") }, -- Ctrl+Right: forward one word
 	{ key = "Backspace", mods = "CMD", action = wezterm.action.SendString("\x15") }, -- Ctrl-U: delete to line start
+	-- WezTerm has no "Hide Others" action, so ask macOS directly (first use prompts to allow controlling System Events).
+	{
+		key = "h",
+		mods = "CMD|OPT",
+		action = wezterm.action_callback(function()
+			wezterm.background_child_process({
+				"/usr/bin/osascript",
+				"-e",
+				'tell application "System Events" to set visible of every process whose visible is true and frontmost is false to false',
+			})
+		end),
+	},
 }
 
 -- Dim unfocused windows so the focused one is obvious at a glance.
